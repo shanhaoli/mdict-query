@@ -11,20 +11,20 @@ class FlexBuffer():
         self.buf = None
 
     def require(self, n):
-        
+
         r = self.c - self.l + n
         if r > 0:
             self.l = self.l + self.blockSize * math.ceil(r / self.blockSize)
-            #tmp = bytearray(self.l)
-            #for i in len(self.buf):
+            # tmp = bytearray(self.l)
+            # for i in len(self.buf):
             #    tmp[i] = self.buf[i]
-            #self.buf = tmp
+            # self.buf = tmp
             self.buf = self.buf + bytearray(self.l - len(self.buf))
         self.c = self.c + n
         return self.buf
 
     def alloc(self, initSize, blockSize):
-        
+
         if blockSize:
             sz = blockSize
         else:
@@ -37,7 +37,7 @@ class FlexBuffer():
         return self.buf
 
     def roundUp(self, n):
-        
+
         r = n % 4
         if r == 0:
             return n
@@ -50,11 +50,11 @@ class FlexBuffer():
         self.l = len(self.buf)
 
     def pack(self, size):
-        
+
         return self.buf[0:size]
 
-def _decompress(inBuf, outBuf):
 
+def _decompress(inBuf, outBuf):
     c_top_loop = 1
     c_first_literal_run = 2
     c_match = 3
@@ -189,9 +189,9 @@ def _decompress(inBuf, outBuf):
                     m_pos += 1
                     t -= 1
                     if not t > 0: break
-            #emulate c switch
+            # emulate c switch
             state = c_copy_match
-        
+
         ##
         if state == c_copy_match:
             if not if_block:
@@ -203,16 +203,16 @@ def _decompress(inBuf, outBuf):
                     m_pos += 1
                     t -= 1
                     if not t > 0: break
-            #emulating c switch
+            # emulating c switch
             state = c_match_done
- 
+
         ##
         if state == c_match_done:
             t = inBuf[ip - 2] & 3
             if t == 0:
                 state = c_top_loop
                 continue
-            #emulate c switch
+            # emulate c switch
             state = c_match_next
 
         ##
@@ -238,9 +238,8 @@ def _decompress(inBuf, outBuf):
 
     return bytes(outBuf.pack(op))
 
-def decompress(input, initSize = 16000, blockSize = 8192):
+
+def decompress(input, initSize=16000, blockSize=8192):
     output = FlexBuffer()
     output.alloc(initSize, blockSize)
     return _decompress(bytearray(input), output)
-
-

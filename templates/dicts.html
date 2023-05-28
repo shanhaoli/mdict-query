@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>All Available Dictionary</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css">
+</head>
+
+<body class="bg-gray-800">
+    <div class="container mx-auto">
+        <h1 class="text-4xl text-white text-center mt-10 mb-5">Choose a dictionary:</h1>
+        <ul class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+            {% for choice in dicts %}
+            <li class="bg-white rounded-lg shadow p-5">
+                <a href="{{ choice.url }}" class="block font-medium text-xl text-gray-800 hover:text-gray-900">{{ choice.title }}</a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>

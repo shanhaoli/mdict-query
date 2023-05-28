@@ -1,23 +1,35 @@
 ﻿<html>
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>{{title}}/{{entry}}</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='../static/style.css') }}">
+    <meta charset="UTF-8">
+    <title>Content</title>
+{#    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css">#}
+    <link rel="stylesheet" href="{{ url_for('static', filename='./style.css') }}">
 </head>
 <body>
-    <script src="{{ url_for('static', filename='../static/utils.js') }}"></script>
-    <div class="search-bar">
+    <nav class="search-bar">
+        <a href="/dict/" class="">Home</a>
         <form onsubmit="redirect()">
           <input type="text" id="search" name="search" placeholder="{{entry}}">
           <button type="submit">Search</button>
         </form>
-     </div>
+    </nav>
+
     <br>
+
     <div class="content-wrapper">
         {{content|safe}}
     </div>
+
     <script>
+        function redirect() {
+            event.preventDefault();
+            const searchTerm = document.getElementById("search").value;
+            const baseUrl = window.location.origin;
+            const path = window.location.pathname;
+            var dictName = path.split('/')[2];
+            window.location.href = `${baseUrl}/dict/${dictName}/${searchTerm}`;
+        }
+
         //play sound
         player = document.createElement("audio")
         player.id = 'player'

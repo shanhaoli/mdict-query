@@ -34,6 +34,7 @@ def path2file(path):
 def title2url(title):
     return re.sub(r"。|，|？|\s|,|\.|/|\\|(|)|（|）", "", title.lower())
 
+
 @app.route('/')
 def hello_world():
     title_url = title2url(mdict._config['dicts'][2]['title'])
@@ -57,6 +58,7 @@ def search_all_dicts_with_word(word):
     rendered_templates = [getEntry(title, word) for title in url_titles]
 
     return render_template("search_all.html", subpages=rendered_templates, word=word)
+
 
 @app.route('/search_all/<regex(".+?\."):base><regex("css|png|jpg|gif|mp3|js|wav|ogg"):ext>')
 def getFileFromAll(base, ext):
@@ -90,18 +92,15 @@ def all_dicts():
         title = dic['title']
         dicts.append({
             'title': title,
-            'url': '/dict/{0}/'.format(title2url(title))
+            'url': f'/dict/{title2url(title)}/hello'
         })
-    return render_template('all.html', dicts=dicts)
+    return render_template('dicts.html', dicts=dicts)
 
 
 @app.route('/dict/<title>/')
 def description(title):
-    if title not in mdx_map:
-        return "没有找到此词典"
-    for xxx in mdict._config['dicts']:
-        if title2url(xxx['title']) == title:
-            return render_template("dict.html", title=xxx['title'], description=xxx['description'], url_title=title)
+    dict_hello_url = f"/dict/{title}/hello"
+    return redirect(dict_hello_url)
 
 
 @app.route('/dict/search/<query>/')
@@ -157,6 +156,7 @@ def getEntry(title, hwd):
     # text.replace("\r\n","").replace("entry://","").replace("sound://","")
     return render_template("entry.html", content=text, title=title, entry=hwd)
 
+
 @app.route('/settings', methods=['GET', 'POST'])
 def settings():
     if request.method == 'POST':
@@ -165,6 +165,7 @@ def settings():
         return render_template('settings.html', folder_path=folder_path)
     else:
         return render_template('settings.html')
+
 
 # handles 404
 # @app.errorhandler(404)

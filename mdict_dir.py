@@ -15,17 +15,20 @@ class Dir(object):
         # check config.json
         self._config_file = os.path.join(mdict_dir, self._config_file_base_name)
 
-        if os.path.exists(self._config_file):
-            self._ensure_config_consistency()
-            self._load_config()
-            self._add_builder()
-            pass
-        else:
-            self._build_index()
-            self._make_config()
-            self._dump_config()
-            self._add_builder()
-            pass
+        # if os.path.exists(self._config_file):
+        #     self._ensure_config_consistency()
+        #     self._load_config()
+        #     self._add_builder()
+        #     pass
+        # else:
+        #     self._build_index()
+        #     self._make_config()
+        #     self._dump_config()
+        #     self._add_builder()
+        #     pass
+        self._build_index()
+        self._make_config()
+        self._add_builder()
 
     def _add_builder(self):
 
@@ -47,6 +50,7 @@ class Dir(object):
             print(full_name)
             if os.path.isfile(full_name):
                 _filename, _file_extension = os.path.splitext(full_name)
+                only_file_name = os.path.split(_filename)[-1]
                 if _file_extension == '.mdx':
                     _config_single_dic = {
                         'title': '',
@@ -58,7 +62,7 @@ class Dir(object):
                         ib = IndexBuilder(full_name)
                     except Exception:
                         continue
-                    _config_single_dic['title'] = ib._title
+                    _config_single_dic['title'] = only_file_name
                     _config_single_dic['description'] = ib._description
                     dict_list.append(_config_single_dic)
         self._config['dicts'] = dict_list

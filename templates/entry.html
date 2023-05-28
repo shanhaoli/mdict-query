@@ -18,15 +18,12 @@
         </ul>
     </nav>
 
-    <header> </header>
-        <p> Checking word <code> {{ entry }}</code>.</p>
+    <p> Checking word <code> {{ entry }}</code>.</p>
 
-        <form height="80" onsubmit="redirect()">
-          <input type="text" id="search" name="search" placeholder="{{entry}}">
-          <button type="submit">Look</button>
-        </form>
-
-    <br>
+    <form height="80" onsubmit="redirect()">
+      <input type="text" id="search" name="search" placeholder="{{entry}}">
+      <button type="submit">Look</button>
+    </form>
 
     <div class="content-wrapper">
         {{content|safe}}

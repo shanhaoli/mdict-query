@@ -1,5 +1,5 @@
 input,textarea,select,button,option,body{
-    font:normal 400 normal 1.125rem/1.85625rem system-ui,"Helvetica Neue",Helvetica,Arial,sans-serif
+    font:normal 450 normal 1.125rem/1.65625rem system-ui,"Helvetica Neue",Helvetica,Arial,sans-serif
 }
 th{
     font-weight:600
@@ -266,7 +266,7 @@ body{
     padding:36px
 }
 p,ul,ol,dl,blockquote,hr,pre,table,form,fieldset,figure,address{
-    margin-bottom:1.85625rem
+    margin-bottom:0.15625rem
 }
 section{
     margin-left:auto;

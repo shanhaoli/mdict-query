@@ -5,6 +5,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='../static/style.css') }}">
 </head>
 <body>
+<script src="{{ url_for('static', filename='../static/utils.js') }}"></script>
 <h1 id="title">{{ title }}</h1>
 
     <div class="search-bar">
@@ -13,17 +14,6 @@
           <button type="submit">Search</button>
         </form>
      </div>
-
-<script>
-    var input = document.querySelector("#input")
-    var button = document.querySelector("#button")
-
-    function redirect() {
-        event.preventDefault();
-        const searchTerm = document.getElementById("search").value;
-        window.location.href = `http://127.0.0.1:5000/dict/%E6%9F%AF%E6%9E%97%E6%96%AF%E5%8F%8C%E8%A7%A3/${searchTerm}`;
-    }
-</script>
 </body>
 
 </html>

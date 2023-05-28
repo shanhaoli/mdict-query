@@ -34,25 +34,6 @@ def path2file(path):
 def title2url(title):
     return re.sub(r"。|，|？|\s|,|\.|/|\\|(|)|（|）", "", title.lower())
 
-
-# init app
-mdict_dir = 'mdx'  # mdx/mdd 文件目录
-mdd_cache_dir = 'cache'
-
-if not os.path.isdir(mdict_dir):
-    print('no mdx directory\n', file=sys.stderr)
-    os.makedirs(mdict_dir)
-
-if not os.path.isdir(mdd_cache_dir):
-    os.makedirs(mdd_cache_dir)
-
-mdict = Dir(mdict_dir)
-# config = mdict._config['dicts'][0]
-mdx_map = {}
-for dic in mdict._config['dicts']:
-    mdx_map[title2url(dic['title'])] = dic['builder']
-
-
 @app.route('/')
 def hello_world():
     return 'Hello World'
@@ -191,4 +172,21 @@ def settings():
 #     return 'Not Found, but we HANDLED IT'
 
 if __name__ == '__main__':
-    app.run('127.0.0.1', 5000, debug=True)
+    # init app, take the last parameter as dict path
+    mdict_dir = sys.argv[-1]
+    mdd_cache_dir = 'cache'
+
+    if not os.path.isdir(mdict_dir):
+        print('no mdx directory\n', file=sys.stderr)
+        os.makedirs(mdict_dir)
+
+    if not os.path.isdir(mdd_cache_dir):
+        os.makedirs(mdd_cache_dir)
+
+    mdict = Dir(mdict_dir)
+    # config = mdict._config['dicts'][0]
+    mdx_map = {}
+    for dic in mdict._config['dicts']:
+        mdx_map[title2url(dic['title'])] = dic['builder']
+
+    app.run('0.0.0.0', 5000, debug=True)

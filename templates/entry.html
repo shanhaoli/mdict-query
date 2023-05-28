@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='../static/style.css') }}">
 </head>
 <body>
+    <script src="{{ url_for('static', filename='../static/utils.js') }}"></script>
     <div class="search-bar">
         <form onsubmit="redirect()">
           <input type="text" id="search" name="search" placeholder="{{entry}}">
@@ -20,12 +21,6 @@
         //play sound
         player = document.createElement("audio")
         player.id = 'player'
-
-        function redirect() {
-            event.preventDefault();
-            const searchTerm = document.getElementById("search").value;
-            window.location.href = `http://127.0.0.1:5000/dict/%E6%9F%AF%E6%9E%97%E6%96%AF%E5%8F%8C%E8%A7%A3/${searchTerm}`;
-        }
 
         function play(url) {
             console.log(url)

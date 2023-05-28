@@ -8,7 +8,7 @@ class Dir(object):
 
     def __init__(self, mdict_dir, config_name='config.json'):
 
-        assert (os.path.isdir(mdict_dir))
+        # assert (os.path.isdir(mdict_dir))
         self._mdict_dir = mdict_dir
         self._config_file_base_name = config_name
         self._config = {}
@@ -76,5 +76,5 @@ class Dir(object):
     def _ensure_config_consistency(self):
         pass
 
-
-Dir('mdx')
+if __name__ == '__main__':
+    Dir('mdx')

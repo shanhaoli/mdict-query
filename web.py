@@ -3,7 +3,7 @@ import os
 import re
 import sys
 
-from flask import Flask, send_from_directory, abort, render_template, Response, request
+from flask import Flask, send_from_directory, abort, render_template, Response, request, redirect, url_for
 
 from mdict_dir import Dir
 
@@ -36,7 +36,9 @@ def title2url(title):
 
 @app.route('/')
 def hello_world():
-    return 'Hello World'
+    title_url = title2url(mdict._config['dicts'][2]['title'])
+    dict_hello_url = f"/dict/{title_url}/hello"
+    return redirect(dict_hello_url)
 
 
 @app.route('/search_all')
@@ -175,6 +177,9 @@ if __name__ == '__main__':
     # init app, take the last parameter as dict path
     mdict_dir = sys.argv[-1]
     mdd_cache_dir = 'cache'
+
+    print(f"looking into folder {mdict_dir}")
+    print(os.listdir(mdict_dir))
 
     if not os.path.isdir(mdict_dir):
         print('no mdx directory\n', file=sys.stderr)

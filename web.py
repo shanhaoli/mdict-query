@@ -32,7 +32,7 @@ def path2file(path):
 
 # 将词典名转为用于url的形式
 def title2url(title):
-    return re.sub(r"。|，|？|\s|,|\.|/|\\|(|)|（|）", "", title.lower())
+    return re.sub(r"。|，|？|\s|,|\.|/|\\|(|)|（|）", "", title)
 
 
 @app.route('/')
@@ -92,6 +92,8 @@ def all_dicts():
         title = dic['title']
         dicts.append({
             'title': title,
+            'description': dic['description'],
+            'path': dic['mdx_name'],
             'url': f'/dict/{title2url(title)}/hello'
         })
     return render_template('dicts.html', dicts=dicts)
@@ -150,11 +152,20 @@ def getEntry(title, hwd):
     if result:
         text = result[0]
     else:
-        return "<p>在词典{0}中没有找到{1}</p>".format(title, hwd)
+        text = "<p>在词典{0}中没有找到{1}</p>".format(title, hwd)
+
+    dicts = []
+    for dic in mdict._config['dicts'][:3]:
+        t = dic['title']
+        dicts.append({
+            'title': t,
+            'url': f'/dict/{title2url(t)}/{hwd}'
+        })
+    url_titles = [title2url(x['title']) for x in mdict._config['dicts']][:3]  # limited to first 3
 
     # return
     # text.replace("\r\n","").replace("entry://","").replace("sound://","")
-    return render_template("entry.html", content=text, title=title, entry=hwd)
+    return render_template("entry.html", content=text, title=title, entry=hwd, dicts=dicts)
 
 
 @app.route('/settings', methods=['GET', 'POST'])

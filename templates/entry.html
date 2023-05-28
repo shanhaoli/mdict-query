@@ -1,18 +1,30 @@
 ﻿<html>
 <head>
     <meta charset="UTF-8">
-    <title>Content</title>
-{#    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss/dist/tailwind.min.css">#}
-    <link rel="stylesheet" href="{{ url_for('static', filename='./style.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dictionary {{ title}} : {{ entry }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='tacit-css-1.5.5.min.css') }}">
 </head>
+
 <body>
-    <nav class="search-bar">
-        <a href="/dict/" class="">Home</a>
-        <form onsubmit="redirect()">
-          <input type="text" id="search" name="search" placeholder="{{entry}}">
-          <button type="submit">Search</button>
-        </form>
+    <nav>
+        <a href="/dict/" height="70">XDict</a>
+        <ul>
+        {% for choice in dicts %}
+            <li class="">
+                <a href="{{ choice.url }}">{{ choice.title }}</a>
+            </li>
+        {% endfor %}
+        </ul>
     </nav>
+
+    <header> </header>
+        <p> Checking word <code> {{ entry }}</code>.</p>
+
+        <form height="80" onsubmit="redirect()">
+          <input type="text" id="search" name="search" placeholder="{{entry}}">
+          <button type="submit">Look</button>
+        </form>
 
     <br>
 

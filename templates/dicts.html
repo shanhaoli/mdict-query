@@ -12,7 +12,9 @@
         <ul class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {% for choice in dicts %}
             <li class="bg-white rounded-lg shadow p-5">
-                <a href="{{ choice.url }}" class="block font-medium text-xl text-gray-800 hover:text-gray-900">{{ choice.title }}</a>
+                <a href="{{ choice.url }}" class="block font-medium text-xl text-gray-800 bg-gray-300 hover:bg-gray-100">{{ choice.title }}</a>
+                <p>{{ choice.path }}</p>
+                <br>
             </li>
             {% endfor %}
         </ul>

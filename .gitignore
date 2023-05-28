@@ -24,7 +24,6 @@ local.properties
 *.mp3
 *.css
 mdx/*
-static/*
 
 # External tool builders
 .externalToolBuilders/

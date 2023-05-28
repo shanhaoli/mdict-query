@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Settings</title>
+</head>
+<body>
+
+    <form action='' method="POST" enctype="multipart/form-data">
+{#        <p>#}
+            <input type="file" webkitdirectory directory multiple/>
+{#        <input type='submit' value='upload'>#}
+{#    </p>#}
+	<h1>Settings</h1>
+	{% if folder_path %}
+	<p>Selected folder: {{ folder_path }}</p>
+	{% else %}
+	<p>No folder selected.</p>
+	{% endif %}
+</body>
+</html>

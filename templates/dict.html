@@ -1,27 +1,27 @@
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>{{title}}</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>{{ title }}</title>
 </head>
 <body>
-    <h1 id="title">{{title}}</h1>
-    <p id="url_title" hidden>{{url_title}}</p>
-    <input id="input"/> <button id="button">search</button>
-    <div>
-        {{description|safe}}
-    </div>
-    <script>
-        var input = document.querySelector("#input")
-        var button = document.querySelector("#button")
-        var url_title = document.querySelector("#url_title").innerText
-        button.addEventListener('click',
-            function()
-            {
-                var hwd = input.value
-                window.location = hwd
-                }
-            )
-    </script>
+<h1 id="title">{{ title }}</h1>
+
+    <form onsubmit="redirect()">
+      <input type="text" id="search" name="search" placeholder="{{entry}}">
+      <button type="submit">Search</button>
+    {{ description|safe }}
+    </form>
+
+<script>
+    var input = document.querySelector("#input")
+    var button = document.querySelector("#button")
+
+    function redirect() {
+        event.preventDefault();
+        const searchTerm = document.getElementById("search").value;
+        window.location.href = `http://127.0.0.1:5000/dict/%E6%9F%AF%E6%9E%97%E6%96%AF%E5%8F%8C%E8%A7%A3/${searchTerm}`;
+    }
+</script>
 </body>
 
 </html>

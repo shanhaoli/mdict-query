@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search Every Dictionaries</title>
+</head>
+<body>
+    <input id="input"/> <button id="button">search</button>
+    <div id="subpages_div">
+    </div>
+
+    <script>
+        var input = document.querySelector("#input")
+        var word = '{{ word|safe }}';
+        if (word.length > 0) {
+            input.innerText = word;
+            const subpages = {{ subpages|safe }};
+            clear_and_show_subpages(subpages);
+        }
+
+        var button = document.querySelector("#button")
+        button.addEventListener('click',
+            () => {
+                var hwd = input.value
+                window.location += '/' + hwd
+            }
+        )
+
+        function clear_and_show_subpages(subpages) {
+            var hwd = input.value
+            var subpages_div = document.getElementById("subpages_div");
+
+            subpages_div.innerHTML = "";
+
+            for(var i = 0; i < subpages.length; i++) {
+                subpages_div.appendChild(subpages[i]);
+            }
+
+
+            {#urltitles.forEach(title => {#}
+            {#    var urlWithoutPath = window.location.protocol + "//" + window.location.host;#}
+            {#    var url = urlWithoutPath + "/dict/" + title + "/" + hwd#}
+            {#    fetch(url)#}
+            {#        .then(response => response.text())#}
+            {#        .then(data => {#}
+            {#            const subpage = document.createElement('div');#}
+            {#            subpage.innerHTML = data;#}
+            {##}
+            {#            subpages.appendChild(subpage);#}
+            {#        })#}
+            {# })#}
+        }
+    </script>
+</body>
+</html>

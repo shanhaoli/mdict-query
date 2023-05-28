@@ -1,10 +1,9 @@
 import json
-# from mdict_query import IndexBuilder
 import os
 import re
 import sys
 
-from flask import Flask, send_from_directory, abort, render_template, Response
+from flask import Flask, send_from_directory, abort, render_template, Response, request
 
 from mdict_dir import Dir
 
@@ -54,10 +53,51 @@ for dic in mdict._config['dicts']:
     mdx_map[title2url(dic['title'])] = dic['builder']
 
 
-##########
 @app.route('/')
 def hello_world():
     return 'Hello World'
+
+
+@app.route('/search_all')
+def search_all_dicts():
+    if len(mdx_map) == 0:
+        return "There is no dicts, please check your configuration."
+    return render_template("search_all.html", subpages=None)
+
+
+@app.route('/search_all/<word>')
+def search_all_dicts_with_word(word):
+    if len(mdx_map) == 0:
+        return "There is no dicts, please check your configuration."
+    url_titles = [title2url(x['title']) for x in mdict._config['dicts']]
+    # get all rendered templates
+    rendered_templates = [getEntry(title, word) for title in url_titles]
+
+    return render_template("search_all.html", subpages=rendered_templates, word=word)
+
+@app.route('/search_all/<regex(".+?\."):base><regex("css|png|jpg|gif|mp3|js|wav|ogg"):ext>')
+def getFileFromAll(base, ext):
+    # print(base + ext, file=sys.stderr)
+    mdd_key = '\\{0}{1}'.format(base, ext).replace("/", "\\")
+    the_builder = None
+    for title, builder in mdx_map.items():
+        if builder.mdd_lookup(mdd_key):
+            the_builder = builder
+    if the_builder == None:
+        return "没有找到此词典"
+
+    # 是否是mdd内的文件
+    cache_name = path2file(base + ext)
+    cache_full = os.path.join(mdd_cache_dir, cache_name)
+    if not os.path.isfile(cache_full):
+        mdd_key = '\\{0}{1}'.format(base, ext).replace("/", "\\")
+        byte = the_builder.mdd_lookup(mdd_key)
+        if not byte:  # 在 mdd 内未找到指定文件
+            abort(404)  # 返回 404
+        file = open(cache_full, 'wb')
+        file.write(byte[0])
+        file.close()
+    return send_from_directory(mdd_cache_dir, cache_name)
 
 
 @app.route('/dict/')
@@ -134,6 +174,21 @@ def getEntry(title, hwd):
     # text.replace("\r\n","").replace("entry://","").replace("sound://","")
     return render_template("entry.html", content=text, title=title, entry=hwd)
 
+@app.route('/settings', methods=['GET', 'POST'])
+def settings():
+    if request.method == 'POST':
+        folder_path = request.form['folder_path']
+        # Do something with the selected folder path, such as saving it in a database or configuration file
+        return render_template('settings.html', folder_path=folder_path)
+    else:
+        return render_template('settings.html')
+
+# handles 404
+# @app.errorhandler(404)
+# def handle_404(e):
+#     # handle all other routes here
+#     print("This is not found", request.url)
+#     return 'Not Found, but we HANDLED IT'
 
 if __name__ == '__main__':
     app.run('127.0.0.1', 5000, debug=True)

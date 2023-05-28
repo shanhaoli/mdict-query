@@ -2,15 +2,17 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>{{ title }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='../static/style.css') }}">
 </head>
 <body>
 <h1 id="title">{{ title }}</h1>
 
-    <form onsubmit="redirect()">
-      <input type="text" id="search" name="search" placeholder="{{entry}}">
-      <button type="submit">Search</button>
-    {{ description|safe }}
-    </form>
+    <div class="search-bar">
+        <form onsubmit="redirect()">
+          <input type="text" id="search" name="search" placeholder="{{entry}}">
+          <button type="submit">Search</button>
+        </form>
+     </div>
 
 <script>
     var input = document.querySelector("#input")

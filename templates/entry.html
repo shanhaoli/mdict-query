@@ -1,15 +1,21 @@
 ﻿<html>
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>{{title}}/{{entry}}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='../static/style.css') }}">
 </head>
 <body>
-    <form onsubmit="redirect()">
-      <input type="text" id="search" name="search" placeholder="{{entry}}">
-      <button type="submit">Search</button>
-    </form>
+    <div class="search-bar">
+        <form onsubmit="redirect()">
+          <input type="text" id="search" name="search" placeholder="{{entry}}">
+          <button type="submit">Search</button>
+        </form>
+     </div>
     <br>
-    {{content|safe}}
+    <div class="content-wrapper">
+        {{content|safe}}
+    </div>
     <script>
         //play sound
         player = document.createElement("audio")

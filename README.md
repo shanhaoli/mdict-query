@@ -44,3 +44,9 @@ Looks up mdd with a key:
     bytes_list = builder.mdd_lookup('/style.css')
     #bytes_list is the bytes list of the file stored in mdd
 
+
+## TODO Items
+
+- [ ] 去掉 cache 文件，直接发送文件，或者在发送之后再删除
+- [ ] 去掉生成额外的 db 文件
+- [ ] 压缩 docker image 和运行时的内存占用

@@ -93,7 +93,7 @@ input[type="submit"],input[type="reset"],button{
     display:inline;
     margin-bottom:0rem;
     margin-right:0rem;
-    padding:0rem 0.3rem;
+    padding: 0.2rem 0.3rem;
     text-align:center
 }
 input[type="submit"]:hover,input[type="reset"]:hover,button:hover{
@@ -118,8 +118,7 @@ input,select,textarea{
 }
 input[type="text"],input[type="password"],input[type="email"],input[type="url"],input[type="phone"],input[type="tel"],input[type="number"],input[type="datetime"],input[type="date"],input[type="month"],input[type="week"],input[type="color"],input[type="time"],input[type="search"],input[type="range"],input[type="file"],input[type="datetime-local"],select,textarea{
     border:1px solid #595959;
-    padding:0rem 0.39375rem
-    padding:0rem 0.39375rem
+    padding:0.2rem 0.35rem
 }
 input[type="checkbox"],input[type="radio"]{
     flex-grow:0;
@@ -263,7 +262,7 @@ html{
 body{
     background:#fff;
     color:#1a1919;
-    padding:36px
+    padding:6px
 }
 p,ul,ol,dl,blockquote,hr,pre,table,form,fieldset,figure,address{
     margin-bottom:0.15625rem
@@ -347,7 +346,7 @@ figure img{
 }
 @media (max-width:767px){
     body{
-        padding:18px 0
+        padding:6px 0
     }
     article{
         border:0;

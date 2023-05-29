@@ -4,26 +4,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dictionary {{ title}} : {{ entry }}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='tacit-css-1.5.5.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 
 <body>
     <nav>
-        <a href="/dict/" height="70">XDict</a>
         <ul>
+            <li>
+                <a href="/dict/">XDict</a>
+            </li>
         {% for choice in dicts %}
-            <li class="">
+            <li>
                 <a href="{{ choice.url }}">{{ choice.title }}</a>
             </li>
         {% endfor %}
         </ul>
     </nav>
 
-    <p> Checking word <code> {{ entry }}</code>.</p>
+    <div class="center-class">
+        <p class="side-by-side"> <small> Checking word </small> <code> {{ entry }}</code> &nbsp; &nbsp; </p>
 
-    <form height="80" onsubmit="redirect()">
-      <input type="text" id="search" name="search" placeholder="{{entry}}">
-      <button type="submit">Look</button>
-    </form>
+        <form onsubmit="redirect()" class="side-by-side">
+          <input type="text" id="search" name="search" size="10" placeholder="{{entry}}">
+          <button type="submit"> <small> Check </small></button>
+        </form>
+    </div>
+
 
     <div class="content-wrapper">
         {{content|safe}}

@@ -30,6 +30,9 @@ class Dir(object):
         self._make_config()
         self._add_builder()
 
+    def get_dicts(self):
+        return self._config["dicts"]
+
     def _add_builder(self):
 
         for dict in self._config['dicts']:

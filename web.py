@@ -37,7 +37,7 @@ def title2url(title):
 
 @app.route('/')
 def hello_world():
-    title_url = title2url(mdict._config['dicts'][2]['title'])
+    title_url = title2url(mdict.get_dicts()[2]['title'])
     dict_hello_url = f"/dict/{title_url}/hello"
     return redirect(dict_hello_url)
 
@@ -53,7 +53,7 @@ def search_all_dicts():
 def search_all_dicts_with_word(word):
     if len(mdx_map) == 0:
         return "There is no dicts, please check your configuration."
-    url_titles = [title2url(x['title']) for x in mdict._config['dicts']]
+    url_titles = [title2url(x['title']) for x in mdict.get_dicts()]
     # get all rendered templates
     rendered_templates = [getEntry(title, word) for title in url_titles]
 
@@ -88,7 +88,7 @@ def getFileFromAll(base, ext):
 @app.route('/dict/')
 def all_dicts():
     dicts = []
-    for dic in mdict._config['dicts']:
+    for dic in mdict.get_dicts():
         title = dic['title']
         dicts.append({
             'title': title,
@@ -108,7 +108,7 @@ def description(title):
 @app.route('/dict/search/<query>/')
 def search(query):
     result = []
-    for xxx in mdict._config['dicts']:
+    for xxx in mdict.get_dicts():
         bd = xxx['builder']
         result.append([title2url(xxx['title']), bd.get_mdx_keys(query)])
     dat = json.dumps(result, ensure_ascii=False)
@@ -155,13 +155,13 @@ def getEntry(title, hwd):
         text = "<p>在词典{0}中没有找到{1}</p>".format(title, hwd)
 
     dicts = []
-    for dic in mdict._config['dicts'][:3]:
+    for dic in mdict.get_dicts()[:3]:
         t = dic['title']
         dicts.append({
             'title': t,
             'url': f'/dict/{title2url(t)}/{hwd}'
         })
-    url_titles = [title2url(x['title']) for x in mdict._config['dicts']][:3]  # limited to first 3
+    url_titles = [title2url(x['title']) for x in mdict.get_dicts()][:3]  # limited to first 3
 
     # return
     # text.replace("\r\n","").replace("entry://","").replace("sound://","")
@@ -193,17 +193,13 @@ if __name__ == '__main__':
     print(f"looking into folder {mdict_dir}")
     print(os.listdir(mdict_dir))
 
-    if not os.path.isdir(mdict_dir):
-        print('no mdx directory\n', file=sys.stderr)
-        os.makedirs(mdict_dir)
-
-    if not os.path.isdir(mdd_cache_dir):
-        os.makedirs(mdd_cache_dir)
+    os.makedirs(mdict_dir, exist_ok=True)
+    os.makedirs(mdd_cache_dir, exist_ok=True)
 
     mdict = Dir(mdict_dir)
-    # config = mdict._config['dicts'][0]
+    # config = mdict.get_dicts()[0]
     mdx_map = {}
-    for dic in mdict._config['dicts']:
+    for dic in mdict.get_dicts():
         mdx_map[title2url(dic['title'])] = dic['builder']
 
     app.run('0.0.0.0', 5000, debug=True)
